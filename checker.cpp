@@ -14,24 +14,15 @@ void printPattern() {
 }
 
 bool isTemperatureCritical(float temperature) {
-    if (temperature > 102 || temperature < 95) {
-        return true;
-    }
-    return false;
+    return (temperature > 102 || temperature < 95);
 }
 
 bool isPulseRateWithinRange(float pulseRate) {
-    if (pulseRate < 60 || pulseRate > 100) {
-        return true;
-    }
-    return false;
+    return (pulseRate < 60 || pulseRate > 100);
 }
 
 bool isSpo2LevelOK(float spo2) {
-    if (spo2 < 90) {
-        return true;
-    }
-    return false;
+    return (spo2 < 90);
 }
 int vitalsOk(float temperature, float pulseRate, float spo2) {
     bool result = true;
