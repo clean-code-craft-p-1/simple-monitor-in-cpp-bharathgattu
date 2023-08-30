@@ -3,40 +3,52 @@
 #include <unistd.h>
 using namespace std;
 
-int vitalsOk(float temperature, float pulseRate, float spo2) {
-    if(temperature > 102 || temperature < 95) {
-        cout << "Temperature critical!\n";
-        for (int i = 0; i < 6; i++)
-        {
-            cout << "\r* " << flush;
-            sleep(1);
-            cout << "\r *" << flush;
-            sleep(1);
-        }
-
-        return 0;
-    } else if(pulseRate < 60 || pulseRate > 100) {
-        cout << "Pulse Rate is out of range!\n";
-        for (int i = 0; i < 6; i++)
-        {
-            cout << "\r* " << flush;
-            sleep(1);
-            cout << "\r *" << flush;
-            sleep(1);
-        }
-        return 0;
-    } else if(spo2 < 90) {
-        cout << "Oxygen Saturation out of range!\n";
-        for (int i = 0; i < 6; i++)
-        {
-            cout << "\r* " << flush;
-            sleep(1);
-            cout << "\r *" << flush;
-            sleep(1);
-        }
-        return 0;
+void printPattern() {
+    for (int i = 0; i < 6; i++)
+    {
+        cout << "\r* " << flush;
+        sleep(1);
+        cout << "\r *" << flush;
+        sleep(1);
     }
-    return 1;
+}
+
+bool isTemperatureCritical(float temperature) {
+    if (temperature > 102 || temperature < 95) {
+        return true;
+    }
+    return false;
+}
+
+bool isPulseRateWithinRange(float pulseRate) {
+    if (pulseRate < 60 || pulseRate > 100) {
+        return true;
+    }
+    return false;
+}
+
+bool isSpo2LevelOK(float spo2) {
+    if (spo2 < 90) {
+        return true;
+    }
+    return false;
+}
+int vitalsOk(float temperature, float pulseRate, float spo2) {
+    bool result = true;
+    if (isTemperatureCritical(temperature) == true) {
+        cout << "Temperature critical!\n";
+        result = false;
+    }
+    else if (isPulseRateWithinRange(pulseRate)) {
+        cout << "Pulse Rate is out of range!\n";
+        result = false;
+    }
+    else if (isSpo2LevelOK(spo2)) {
+        cout << "Oxygen Saturation out of range!\n";
+        result = false;
+    }
+    printPattern();
+    return result;
 }
 
 int main() {
